@@ -23,6 +23,7 @@
       --color-canvas-subtle: #161b22;
       --color-border-muted: #30363d;
       --color-neutral-muted: rgba(110,118,129,0.4);
+      --transition-timing: 2s ease-in-out;
 
       /* Added variables for rgba colors derived from theme colors */
       --color-bg-secondary-rgba: rgba(22, 27, 34, 0.6);
@@ -53,6 +54,13 @@
       --color-border-default-rgba: rgba(208, 215, 222, 0.6);
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all var(--transition-timing) !important;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
       background: var(--color-bg-default);
@@ -61,7 +69,6 @@
       min-height: 100vh;
       margin: 0;
       padding: 0;
-      transition: all 2s ease;
     }
 
     /* Updated background colors for elements to use rgba variables for glassy effect */
@@ -77,7 +84,6 @@
       border: 1px solid var(--color-border-default);
       border-radius: 8px;
       padding: 1.5rem;
-      transition: all 2s ease;
     }
 
     /* Adjusting tertiary background elements */
@@ -85,20 +91,13 @@
     .skill-item,
     .certification-item,
     .language-level {
-       background-color: var(--color-bg-tertiary-rgba);
-       border: 1px solid var(--color-border-default);
-       transition: all 2s ease;
+      background-color: var(--color-bg-tertiary-rgba);
+      border: 1px solid var(--color-border-default);
     }
 
-    /* Text color transitions for elements that change color */
-    h1,
-    h2,
-    h3,
-    h4,
-    p,
-    span,
-    a {
-      transition: all 2s ease;
+    /* Text color transitions */
+    h1, h2, h3, h4, p, span, a {
+      transition: color var(--transition-timing);
     }
 
     /* Glassy effect with backdrop-filter for day theme */
@@ -138,12 +137,6 @@
     footer {
       position: relative;
       z-index: 1;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
     }
 
     header {
