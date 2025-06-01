@@ -29,13 +29,19 @@
       --color-bg-secondary-rgba: rgba(22, 27, 34, 0.6);
       --color-bg-tertiary-rgba: rgba(33, 38, 45, 0.6);
       --color-border-default-rgba: rgba(48, 54, 61, 0.6);
+
+      /* Day theme variables (will be set dynamically) */
+      --day-bg-default: #ffffff;
+      --day-bg-secondary: #f6f8fa;
+      --day-bg-tertiary: #eaecef;
+      --day-border-default: #d0d7de;
     }
 
     body.day-theme { /* Day Theme */
-      --color-bg-default: #ffffff;
-      --color-bg-secondary: #f6f8fa;
-      --color-bg-tertiary: #eaecef;
-      --color-border-default: #d0d7de;
+      --color-bg-default: var(--day-bg-default);
+      --color-bg-secondary: var(--day-bg-secondary);
+      --color-bg-tertiary: var(--day-bg-tertiary);
+      --color-border-default: var(--day-border-default);
       --color-text-primary: #24292f;
       --color-text-secondary: #57606a;
       --color-accent-fg: #0969da;
@@ -43,9 +49,9 @@
       --color-success-fg: #1a7f37;
       --color-attention-fg: #9a6700;
       --color-danger-fg: #cf222e;
-      --color-canvas-default: #ffffff;
-      --color-canvas-subtle: #f6f8fa;
-      --color-border-muted: #d0d7de;
+      --color-canvas-default: var(--day-bg-default);
+      --color-canvas-subtle: var(--day-bg-secondary);
+      --color-border-muted: var(--day-border-default);
       --color-neutral-muted: rgba(175, 184, 193, 0.4);
 
       /* Added variables for rgba colors derived from theme colors (Day theme) */
@@ -1342,6 +1348,26 @@
     const body = document.body;
     const themeIcon = themeToggleBtn.querySelector('i');
 
+    // Function to generate light theme colors based on profile colors
+    function generateLightThemeColors(accentColor) {
+      // Convert hex to RGB
+      const r = parseInt(accentColor.slice(1, 3), 16);
+      const g = parseInt(accentColor.slice(3, 5), 16);
+      const b = parseInt(accentColor.slice(5, 7), 16);
+
+      // Generate lighter shades
+      const bgDefault = `rgb(${r + 240}, ${g + 240}, ${b + 240})`;
+      const bgSecondary = `rgb(${r + 230}, ${g + 230}, ${b + 230})`;
+      const bgTertiary = `rgb(${r + 220}, ${g + 220}, ${b + 220})`;
+      const borderColor = `rgb(${r + 180}, ${g + 180}, ${b + 180})`;
+
+      // Set CSS variables for day theme
+      document.documentElement.style.setProperty('--day-bg-default', bgDefault);
+      document.documentElement.style.setProperty('--day-bg-secondary', bgSecondary);
+      document.documentElement.style.setProperty('--day-bg-tertiary', bgTertiary);
+      document.documentElement.style.setProperty('--day-border-default', borderColor);
+    }
+
     // Function to set the theme
     function setTheme(theme) {
       if (theme === 'day') {
@@ -1389,6 +1415,9 @@
         document.getElementById('github-location').textContent = userData.location || 'Chennai, India';
         document.getElementById('github-repos').textContent = `${userData.public_repos}+ repositories`;
         document.getElementById('github-followers').textContent = `${userData.followers}+ followers`;
+
+        // Generate light theme colors based on GitHub's accent color
+        generateLightThemeColors('#58a6ff'); // GitHub's default accent color
 
       } catch (error) {
         console.error('Error fetching GitHub data:', error);
